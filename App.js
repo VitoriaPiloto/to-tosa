@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthProvider } from './AuthContext';
+import { registerRootComponent } from 'expo';
 
 import Login from './forms/Login';
 import Home from './pages/Home';
@@ -44,3 +45,5 @@ export default function App() {
     </AuthProvider>
   );
 }
+
+registerRootComponent(App);
