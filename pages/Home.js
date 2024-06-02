@@ -1,73 +1,53 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
-const DummyScreen = ({ title }) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{title}</Text>
-    </View>
-  );
-};
+const DummyScreen = ({ title }) => (
+  <View style={styles.container}>
+    <Text style={styles.text}>{title}</Text>
+  </View>
+);
 
-const HomeScreen = () => {
-  return <DummyScreen title="Home" />;
-};
+const HomeScreen = () => <DummyScreen title="Home" />;
+const SettingsScreen = () => <DummyScreen title="Settings" />;
+const ProfileScreen = () => <DummyScreen title="Profile" />;
 
-const SettingsScreen = () => {
-  return <DummyScreen title="Settings" />;
-};
+const Tab = createBottomTabNavigator(); // Use the destructured Tab object
 
-const ProfileScreen = () => {
-  return <DummyScreen title="Profile" />;
-};
-
-const TabNavigator = createBottomTabNavigator(
-  {
-    Home: {
-      screen: HomeScreen,
-      navigationOptions: {
+const App = () => (
+  <NavigationContainer>
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarActiveTintColor: '#FF5579',
+        tabBarInactiveTintColor: 'gray',
+      }}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} options={{
         tabBarLabel: 'Home',
         tabBarIcon: ({ tintColor }) => (
           <Ionicons name="home" size={24} color={tintColor} />
         ),
-      },
-    },
-    Settings: {
-      screen: SettingsScreen,
-      navigationOptions: {
+      }} />
+      <Tab.Screen name="Settings" component={SettingsScreen} options={{
         tabBarLabel: 'Settings',
         tabBarIcon: ({ tintColor }) => (
           <Ionicons name="settings" size={24} color={tintColor} />
         ),
-      },
-    },
-    Profile: {
-      screen: ProfileScreen,
-      navigationOptions: {
+      }} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{
         tabBarLabel: 'Profile',
         tabBarIcon: ({ tintColor }) => (
           <Ionicons name="person" size={24} color={tintColor} />
         ),
-      },
-    },
-  },
-  {
-    initialRouteName: 'Home',
-    tabBarOptions: {
-      activeTintColor: '#FF5579',
-      inactiveTintColor: 'gray',
-    },
-  }
+      }} />
+    </Tab.Navigator>
+  </NavigationContainer>
 );
 
-const AppContainer = createAppContainer(TabNavigator);
-
-export default function App() {
-  return <AppContainer />;
-}
+export default App;
 
 const styles = StyleSheet.create({
   container: {
